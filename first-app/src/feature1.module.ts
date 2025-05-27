@@ -3,5 +3,10 @@ import { Module } from '@nestjs/common';
   imports: [],
   controllers: [],
   providers: [],
+  exports: [],
 })
-export class AppModule {}
+export class Feature1 {
+  constructor() {
+    console.log('Feature1 initialized');
+  }
+}
