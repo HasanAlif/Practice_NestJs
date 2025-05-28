@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Book } from "./data/book.dto";
 import { v4 as uuidv4 } from 'uuid';
+import { BookDto } from "./dto/book.dto";
 
 
 
@@ -12,6 +13,10 @@ export class BookService {
         book.id = uuidv4(); // Generate a unique ID for the book
         this.books.push(book);
         return `Book with title ${book.title} added successfully.`;
+    }
+
+    addBookServiceWithId(book: BookDto): string {
+        return `Book with title ${book.name} added successfully with id ${book.id}.`;
     }
 
     updateBookService( book: Book): string {
