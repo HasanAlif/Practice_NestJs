@@ -5,9 +5,10 @@
 type Book {
   id: Int!
   title: String!
-  price: Int
+  price: Int!
 }
 
 type Query {
-  books: [Book!]!
+  index: String!
+  getAllBooks: [Book!]!
 }
