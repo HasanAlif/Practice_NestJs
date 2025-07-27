@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { BookEntity } from './entity/book.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AddBookArgs } from './args/addbook.args';
+import { UpdateBookArgs } from './args/updatebook.args';
 
 @Injectable()
 export class BookService {
@@ -23,8 +25,31 @@ export class BookService {
     return book;
   }
 
-  async deleteBook(id: number): Promise<string>{
+  async deleteBook(id: number): Promise<string> {
     await this.bookRepo.delete(id);
     return `Book with ID ${id} deleted successfully`;
+  }
+
+  async addBook(addBookArgs: AddBookArgs): Promise<string> {
+    let book: BookEntity = new BookEntity();
+    book.title = addBookArgs.title;
+    book.price = addBookArgs.price;
+    await this.bookRepo.save(book);
+    return `Book with Title ${book.title} added successfully`;
+  }
+
+  async updateBook(updateBookArgs: UpdateBookArgs): Promise<string> {
+    let book: BookEntity | null = await this.bookRepo.findOne({
+      where: { id: updateBookArgs.id },
+    });
+    if (!book) {
+      throw new NotFoundException(
+        `Book with ID ${updateBookArgs.id} not found`,
+      );
+    }
+    book.title = updateBookArgs.title;
+    book.price = updateBookArgs.price;
+    await this.bookRepo.save(book);
+    return `Book with ID ${updateBookArgs.id} updated successfully`;
   }
 }
