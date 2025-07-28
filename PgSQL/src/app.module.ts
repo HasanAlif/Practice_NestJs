@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AppResolver } from './app.resolver';
 import { ApolloDriver } from '@nestjs/apollo';
@@ -30,7 +29,7 @@ import { BookModule } from './book/book.module';
     }),
     BookModule
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [AppService, AppResolver],
 })
 export class AppModule {}
